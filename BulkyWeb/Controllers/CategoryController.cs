@@ -34,6 +34,7 @@ namespace BulkyWeb.Controllers
             }
 
             /*
+             * 
             string pattern = @"\d";
 
             // Use Regex.IsMatch to check if the string contains a digit
