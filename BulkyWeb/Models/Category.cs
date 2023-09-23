@@ -9,7 +9,6 @@ namespace BulkyWeb.Models
         public int Id { get; set; }//Primary Key
         [Required]
         [MaxLength(30,ErrorMessage ="Name Must be within 30 character limit")]
-        //[RegularExpression(@"^([a-zA-Z0-9 \.\&\'\-]+)$", ErrorMessage = "Invalid User Name")]
         [DisplayName("Category Name")]
         public string Name { get; set; }
         [DisplayName("Display Order")]

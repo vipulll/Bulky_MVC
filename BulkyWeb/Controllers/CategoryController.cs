@@ -2,6 +2,7 @@
 using BulkyWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace BulkyWeb.Controllers
@@ -25,36 +26,33 @@ namespace BulkyWeb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken] // Add anti-forgery token
-
         public IActionResult Create(Category obj)
         {
             if (obj.Name == obj.DisplayOrder.ToString())
             {
                 ModelState.AddModelError("Name","Name can not be same as Display Order");
             }
-
-            /*
-             * 
+ 
             string pattern = @"\d";
-
             // Use Regex.IsMatch to check if the string contains a digit
             bool containsNumber = Regex.IsMatch(obj.Name.ToString(), pattern);
             if (containsNumber)
             {
                 ModelState.AddModelError("Name", "Name can not contain Number");
             }
-            */
 
             if (ModelState.IsValid)
             {
                 _db.Categorys.Add(obj);
                 _db.SaveChanges();
+                TempData["Sucess"] = "Record Created Sucessfully";
                 return RedirectToAction("Index", "Category");
+                //return View("Index");
             }
             return View();
         }
         //
-
+        [HttpGet]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -62,46 +60,52 @@ namespace BulkyWeb.Controllers
                 return NotFound();
             }
             Category Cat = _db.Categorys.Find(id);
+
+            Category? Cat1 = _db.Categorys.FirstOrDefault(u => u.Name == "vipull");
             if (Cat == null)
             {
                 return NotFound();
             }
-            return View();
+            return View(Cat);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken] // Add anti-forgery token
-
         public IActionResult Edit(Category obj)
         {
             
             if (ModelState.IsValid)
             {
-                _db.Categorys.Add(obj);
+                _db.Categorys.Update(obj);
                 _db.SaveChanges();
+                TempData["Sucess"] = "Record Edited Sucessfully";
                 return RedirectToAction("Index", "Category");
             }
             return View();
         }
-
-        public IActionResult Delete()
+        [HttpGet]
+        public IActionResult Delete(int? id)
         {
-            return View();
+            Category? Cat1 = _db.Categorys.Find(id);
+
+            return View(Cat1);
         }
 
-        //[HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken] // Add anti-forgery token
-
-        public IActionResult Delete(Category obj)
+        [ActionName("Delete")]
+        public IActionResult DeletePOST(Category obj)
         {
+
+            //Category? obj = _db.Categorys.Find(id);
            
-            if (ModelState.IsValid)
-            {
-                _db.Categorys.Add(obj);
+                _db.Categorys.Remove(obj);
                 _db.SaveChanges();
-                return RedirectToAction("Index", "Category");
-            }
-            return View();
+            TempData["Sucess"] = "Record Delete Sucessfully";
+                //return RedirectToAction("Index", "Category");
+            
+            //return View();
+            return RedirectToAction("Index", "Category");
         }
 
     }

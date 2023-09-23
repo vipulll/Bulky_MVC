@@ -1,4 +1,5 @@
 ﻿@model List<Category>
+<partial name="_Notification"></partial>
 
 <div class="container">
     <div class="row pt-4" pd>
@@ -48,7 +49,7 @@
                                 <i class="bi bi-pencil"></i>Edit
                             </a>
 
-                            <a asp-controller="Category" asp-action="Delete" class="btn btn-danger mx-2">
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@BookData.Id" class="btn btn-danger mx-2">
                                 <i class="bi bi-trash"></i>Delete
                             </a>
                         </div>
