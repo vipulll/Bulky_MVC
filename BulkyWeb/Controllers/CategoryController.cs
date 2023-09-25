@@ -59,7 +59,7 @@ namespace BulkyWeb.Controllers
             {
                 return NotFound();
             }
-            Category Cat = _db.Categorys.Find(id);
+            Category? Cat = _db.Categorys.Find(id);
 
             Category? Cat1 = _db.Categorys.FirstOrDefault(u => u.Name == "vipull");
             if (Cat == null)
