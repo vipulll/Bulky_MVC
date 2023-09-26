@@ -1,9 +1,9 @@
-﻿using BulkyWeb.Data;
-using BulkyWeb.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+using Bulky.DataAcess.Data;
+using Bulky.Models;
 
 namespace BulkyWeb.Controllers
 {
@@ -96,15 +96,10 @@ namespace BulkyWeb.Controllers
         [ActionName("Delete")]
         public IActionResult DeletePOST(Category obj)
         {
-
             //Category? obj = _db.Categorys.Find(id);
-           
                 _db.Categorys.Remove(obj);
                 _db.SaveChanges();
             TempData["Sucess"] = "Record Delete Sucessfully";
-                //return RedirectToAction("Index", "Category");
-            
-            //return View();
             return RedirectToAction("Index", "Category");
         }
 
